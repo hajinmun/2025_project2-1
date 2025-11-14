@@ -7,14 +7,32 @@
 <head>
     <meta charset="UTF-8">
     <title>게시판</title>
-    <style></style>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            background-color: white;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+
 </head>
 <body>
-<div class="container">
-    <h1>게시판</h1>
+<div class="container my-5">
+
+    <!-- 제목 -->
+    <div class="text-center">
+        <h2 class="fw-bold">게시판</h2>
+    </div>
+
     <%
         try {
-            //mockapi호출
+            // API 호출
             String apiUrl = "https://68db330123ebc87faa323a7c.mockapi.io/post";
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -23,70 +41,88 @@
 
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String inputLine;
-            StringBuilder response = new StringBuilder();
+            StringBuilder responseBuilder = new StringBuilder();
 
             while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+                responseBuilder.append(inputLine);
             }
             in.close();
 
-            // JSON 파싱
-            JSONArray posts = new JSONArray(response.toString());
+            JSONArray posts = new JSONArray(responseBuilder.toString());
     %>
-    <table>
-        <thead>
-        <tr>
-            <th style="width: 60px;">id</th>
-            <th>title</th>
-            <th style="width: 100px;">writer</th>
-            <th style="width: 100px;">menu</th>
-            <th style="width: 100px;">created_date</th>
-            <th style="width: 80px;">hit</th>
-            <th style="width: 140px;">menu</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <%
-            //mockapi데이터 가져오기, 역순 정렬
-            for(int i = posts.length() - 1; i>=0; i--){
-                JSONObject post = posts.getJSONObject(i);
-                String id = post.getString("id");
-                String title = post.getString("title");
-                String writer = post.getString("writer");
-                String menu = post.optString("menu", "일반");
-                int hit = post.getInt("hit");
-                long createdDate = post.getLong("created_date");
+    <div>
+        <div class="card-body">
 
-                //날짜변환
-                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
-                String dateStr = sdf.format(new java.util.Date(createdDate * 1000L));
-        %>
-        <tr>
-            <td><%= id %></td>
-            <td>
-                <a href="view.jsp?id=<%= id %>"><%= title %></a>
-            </td>
-            <td><%= writer %></td>
-            <td><%= menu %></td>
-            <td><%= dateStr %></td>
-            <td><%= hit %></td>
-            <td>
-                <a href="edit.html?id=<%= id %>" class="btn btn-edit">수정</a>
-                <a href="delete_ok.jsp?id=<%= id %>"
-                   class="btn btn-delete"
-                   onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
-            </td>
-        </tr>
-        <%
-            }
-        %>
-        </tbody>
-    </table>
+            <!-- 테이블 -->
+            <table class="table table-bordered table-hover align-middle text-center">
+                <thead class="table-warning">
+                <tr>
+                    <th style="width: 60px;">ID</th>
+                    <th>제목</th>
+                    <th style="width: 120px;">작성자</th>
+                    <th style="width: 130px;">작성일</th>
+                    <th style="width: 70px;">조회</th>
+                    <th style="width: 150px;">관리</th>
+                </tr>
+                </thead>
 
-    <div class="button-container">
-        <a href="write.html" class="btn">add</a>
+                <tbody>
+                <%
+                    for (int i = posts.length() - 1; i >= 0; i--) {
+                        JSONObject post = posts.getJSONObject(i);
+                        String id = post.getString("id");
+                        String title = post.getString("title");
+                        String writer = post.getString("writer");
+                        int hit = post.getInt("hit");
+                        long createdDate = post.getLong("created_date");
+
+                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                        String dateStr = sdf.format(new java.util.Date(createdDate * 1000L));
+                %>
+
+                <tr>
+                    <td><%= id %></td>
+                    <td>
+                        <a href="view.jsp?id=<%= id %>" class="fw-semibold text-dark">
+                            <%= title %>
+                        </a>
+                    </td>
+                    <td><%= writer %></td>
+                    <td><%= dateStr %></td>
+                    <td><%= hit %></td>
+                    <td>
+                        <a href="edit.html?id=<%= id %>" class="btn btn-primary btn-sm">수정</a>
+                        <a href="delete_ok.jsp?id=<%= id %>"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('정말 삭제하시겠습니까?');">
+                            삭제
+                        </a>
+                    </td>
+                </tr>
+
+                <%
+                    }
+                %>
+                </tbody>
+            </table>
+
+            <!-- 글쓰기 버튼 -->
+            <div class="text-end mt-3">
+                <a href="write.html" class="btn btn-success px-4">+ 글쓰기</a>
+            </div>
+
+        </div>
     </div>
+
+    <%
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    %>
+
 </div>
 </body>
 </html>
