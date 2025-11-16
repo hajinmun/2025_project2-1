@@ -91,7 +91,7 @@
                     <td><%= dateStr %></td>
                     <td><%= hit %></td>
                     <td>
-                        <a href="edit.html?id=<%= id %>" class="btn btn-primary btn-sm">수정</a>
+                        <a href="edit.jsp?id=<%= id %>" class="btn btn-primary btn-sm">수정</a>
                         <a href="delete_ok.jsp?id=<%= id %>"
                            class="btn btn-danger btn-sm"
                            onclick="return confirm('정말 삭제하시겠습니까?');">
