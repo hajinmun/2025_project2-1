@@ -85,12 +85,12 @@
             <h2 class="fw-bold text-primary">수정 완료</h2>
         </div>
 
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-warning" role="alert">
             게시글이 수정되었습니다
         </div>
 
         <div class="card">
-            <div class="card-header bg-warning">
+            <div class="card-header">
                 <h5 class="mb-0">수정 내용</h5>
             </div>
             <div class="card-body">
