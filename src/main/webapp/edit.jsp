@@ -93,7 +93,7 @@
         } catch (Exception e) {
         %>
         <div class="alert alert-danger" role="alert">
-            ⚠️ 게시글을 불러오는데 실패했습니다: <%= e.getMessage() %>
+            게시글을 불러오는데 실패했습니다: <%= e.getMessage() %>
         </div>
         <a href="list.jsp" class="btn btn-secondary">목록으로</a>
         <%
