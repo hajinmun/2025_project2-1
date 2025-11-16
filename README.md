@@ -1,1 +1,20 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/FTZBkejJ)
+![list.png](img/list.png)
+목록보기
+
+![write.png](img/write.png)
+새글
+
+![write_ok.png](img/write_ok.png)
+글저장 실행
+
+![view.png](img/view.png)
+상세보기
+
+![edit.png](img/edit.png)
+수정
+
+![edit_ok.png](img/edit_ok.png)
+수정실행
+
+![delete_ok.png](img/delete_ok.png)
+삭제실행
